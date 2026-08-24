@@ -1,0 +1,19 @@
+/* Ajustes finos complementares ao Bootstrap */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+/* Distingue visualmente as badges de status na tabela */
+.badge-analise { background-color: #ffc107; color: #000; }
+.badge-aprovado { background-color: #198754; }
+.badge-reprovado { background-color: #dc3545; }
+.badge-contratado { background-color: #0d6efd; }

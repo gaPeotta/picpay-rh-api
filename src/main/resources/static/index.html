@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RH PicPay - Sistema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <h2 class="mb-4 text-success fw-bold">RH PicPay 💚</h2>
+        
+        <div id="alerta-container"></div>
+
+        <!-- Indicadores -->
+        <div class="row mb-4 text-center">
+            <div class="col"><div class="card p-3 shadow-sm"><h5>Total</h5><h3 id="ind-total">0</h3></div></div>
+            <div class="col"><div class="card p-3 shadow-sm text-warning"><h5>Análise</h5><h3 id="ind-analise">0</h3></div></div>
+            <div class="col"><div class="card p-3 shadow-sm text-success"><h5>Aprovados</h5><h3 id="ind-aprovados">0</h3></div></div>
+            <div class="col"><div class="card p-3 shadow-sm text-danger"><h5>Reprovados</h5><h3 id="ind-reprovados">0</h3></div></div>
+            <div class="col"><div class="card p-3 shadow-sm text-primary"><h5>Contratados</h5><h3 id="ind-contratados">0</h3></div></div>
+        </div>
+
+        <!-- Ações e Busca -->
+        <div class="d-flex justify-content-between mb-3">
+            <button class="btn btn-success" onclick="abrirModal()">+ Novo Candidato</button>
+            <div class="d-flex gap-2 w-50">
+                <input type="text" id="busca-texto" class="form-control" placeholder="Buscar por nome ou cargo...">
+                <select id="busca-status" class="form-select">
+                    <option value="">Todos os status</option>
+                    <option value="EM_ANALISE">Em Análise</option>
+                    <option value="APROVADO">Aprovado</option>
+                    <option value="REPROVADO">Reprovado</option>
+                    <option value="CONTRATADO">Contratado</option>
+                </select>
+                <button class="btn btn-outline-secondary" onclick="filtrarTabela()">Filtrar</button>
+            </div>
+        </div>
+
+        <!-- Tabela -->
+        <div class="card shadow-sm">
+            <div class="card-body p-0 table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nome</th><th>E-mail</th><th>Cargo</th><th>Status</th><th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Cadastro/Edição -->
+    <div class="modal fade" id="modalFuncionario" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitulo">Candidato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-funcionario">
+                        <input type="hidden" id="func-id">
+                        <div class="mb-2"><input type="text" id="func-nome" class="form-control" placeholder="Nome" required></div>
+                        <div class="mb-2"><input type="email" id="func-email" class="form-control" placeholder="E-mail" required></div>
+                        <div class="mb-2"><input type="text" id="func-telefone" class="form-control" placeholder="Telefone"></div>
+                        <div class="mb-2"><input type="text" id="func-cargo" class="form-control" placeholder="Cargo" required></div>
+                        <div class="mb-2"><input type="text" id="func-departamento" class="form-control" placeholder="Departamento"></div>
+                        <div class="mb-2"><input type="number" id="func-salario" class="form-control" placeholder="Salário" step="0.01"></div>
+                        <div class="mb-2"><input type="text" id="func-cidade" class="form-control" placeholder="Cidade"></div>
+                        <div class="mb-3">
+                            <select id="func-status" class="form-select" required>
+                                <option value="EM_ANALISE">Em Análise</option>
+                                <option value="APROVADO">Aprovado</option>
+                                <option value="REPROVADO">Reprovado</option>
+                                <option value="CONTRATADO">Contratado</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html>
