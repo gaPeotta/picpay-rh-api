@@ -40,34 +40,33 @@ A API segue os padroes REST utilizando os cinco metodos HTTP principais:
 | PATCH | /funcionarios/{id} | Atualiza parcialmente os dados do candidato |
 | DELETE | /funcionarios/{id} | Remove o candidato da lista |
 
+
+
+
+
 ## Arquitetura do Sistema
 
-O projeto segue o padrao arquitetural em camadas (Layered Architecture), separando claramente as responsabilidades entre a interface visual, o controle de rotas, as regras de negocio e o armazenamento de dados.
+O projeto segue o padrao arquitetural em camadas, separando as responsabilidades entre interface visual, controle de rotas, regras de negocio e armazenamento.
 
-+-------------------------------------------------------------+
-|                        FRONT END                            |
-|  HTML5 + CSS3 (Bootstrap) + JavaScript (Fetch API)          |
-+------------------------------+------------------------------+
-                               |
-                     Requisicoes HTTP (JSON)
-                [POST, GET, PUT, PATCH, DELETE]
-                               v
-+-------------------------------------------------------------+
-|                   BACK END (Spring Boot)                    |
-|                                                             |
-|  [ Camada Controller ]  FuncionarioController               |
-|  Recebe as rotas REST, processa o payload e retorna status  |
-|                                                             |
-|  [ Camada Service ]     FuncionarioService                  |
-|  Executa regras de negocio, validacoes e manipulacao        |
-|                                                             |
-|  [ Camada Model ]       Funcionario / StatusCandidato       |
-|  Define as entidades e os enums do dominio                  |
-+------------------------------+------------------------------+
-                               |
-                     Manipulacao em Memoria
-                               v
-+-------------------------------------------------------------+
-|                    PERSISTENCIA TEMPORARIA                  |
-|  ArrayList<Funcionario> (Memoria RAM)                       |
-+-------------------------------------------------------------+
+```mermaid
+flowchart TD
+    subgraph FRONTEND [Front end]
+        UI[Interface Web HTML5, CSS3, Bootstrap]
+        JS[api.js, Fetch API]
+    end
+
+    subgraph BACKEND [Back end, Spring Boot]
+        CTRL[FuncionarioController, Endpoints REST]
+        SRV[FuncionarioService, Regras de Negocio]
+        MDL[Model, StatusCandidato]
+    end
+
+    subgraph STORAGE [Persistencia Temporaria]
+        RAM[(ArrayList em Memoria RAM)]
+    end
+
+    UI --> JS
+    JS -->|Requisicoes HTTP JSON| CTRL
+    CTRL --> SRV
+    SRV --> MDL
+    SRV --> RAM
